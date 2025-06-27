@@ -18,7 +18,6 @@ Route::middleware(['auth'])->group(function () {
     });
 
     Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa');
-    Route::get('/mahasiswa/{id}/edit', [MahasiswaController::class, 'edit'])->name('mahasiswa.edit');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');   
 });

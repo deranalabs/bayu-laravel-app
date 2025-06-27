@@ -192,30 +192,30 @@
                     });
                 });
 
-                $(document).on('click', '#editMahasiswa', function(event) {
-                    var nim = $(this).data('nim');
-                    $('#btn-simpan').text('Update');
-                    $('#btn-simpan').attr('id', 'btn-update');
-                    $.ajax({
-                        url: "api/mahasiswa/" + nim,
-                        type: "GET",
-                        success: function(response) {
-                            console.log(response);
-                            $('#nama').val(response.data.nama);
-                            $('#nim').val(response.data.nim).prop('disabled', true);
-                            $('#jk').val(response.data.jk);
-                            $('#tgl_lahir').val(response.data.tgl_lahir);
-                            $('#jurusan').val(response.data.jurusan);
-                            $('#alamat').val(response.data.alamat);
-                            $('#modal-mahasiswa').modal('show');
-                        },
-                        error: function(xhr, status, error) {
-                            console.log(xhr.responseText);
-                            alert('Data gagal diambil');
-                            toastr.error('Data gagal diambil');
-                        }
-                    });
-                });
+$(document).on('click', '#editMahasiswa', function(event) {
+    var nim = $(this).data('nim');
+    $('#btn-simpan').text('Update');
+    $('#btn-simpan').attr('id', 'btn-update');
+    $.ajax({
+        url: "api/mahasiswa/" + nim,
+        type: "GET",
+        success: function(response) {
+            console.log(response);
+            $('#nama').val(response.data.nama);
+            $('#nim').val(response.data.nim).prop('disabled', true);
+            $('#jk').val(response.data.jk);
+            $('#tgl_lahir').val(response.data.tgl_lahir);
+            $('#jurusan').val(response.data.jurusan);
+            $('#alamat').val(response.data.alamat);
+            $('#modal-mahasiswa').modal('show');
+        },
+        error: function(xhr, status, error) {
+            console.log(xhr.responseText);
+            alert('Data gagal diambil');
+            toastr.error('Data gagal diambil');
+        }
+    });
+});
 
                 $(document).on('click', '#btn-update', function(e) {
                     e.preventDefault();

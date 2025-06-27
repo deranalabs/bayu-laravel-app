@@ -9,94 +9,85 @@ use App\Http\Resources\MahasiswaResource;
 
 class MahasiswaController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     * For web: return view with data
-     * For API: return JSON collection
-     */
+    // Tampilkan semua data mahasiswa
     public function index(Request $request)
     {
         $mahasiswas = Mahasiswa::all();
 
         if ($request->wantsJson()) {
-            return MahasiswaResource::collection($mahasiswas);
+            return response()->json([
+                'success' => true,
+                'data' => MahasiswaResource::collection($mahasiswas)
+            ]);
         }
 
         return view('mahasiswa', compact('mahasiswas'));
     }
 
-    /**
-     * Store a newly created resource in storage.
-     */
+    // Simpan data mahasiswa baru
     public function store(Request $request)
     {
         $request->validate([
-            'nim' => 'required|string|max:10|unique:mahasiswas',
+            'nim' => 'required|string|max:20|unique:mahasiswas',
             'nama' => 'required|string|max:255',
             'jk' => 'required|string|max:10',
             'tgl_lahir' => 'required|date',
             'jurusan' => 'required|string|max:100',
             'alamat' => 'required|string|max:255'
         ]);
+
         $mahasiswa = Mahasiswa::create($request->all());
-        return (new MahasiswaResource($mahasiswa))
-            ->additional([
-                'success' => true,
-                'message' => 'Mahasiswa created successfully'
-            ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => new MahasiswaResource($mahasiswa),
+            'message' => 'Mahasiswa created successfully'
+        ]);
     }
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
+    // Ambil data mahasiswa berdasarkan NIM
+    public function show(string $nim)
     {
-        $mahasiswa = Mahasiswa::findorfail($id);
-        return response()->json($mahasiswa);
+        $mahasiswa = Mahasiswa::findOrFail($nim);
+
+        return response()->json([
+            'success' => true,
+            'data' => new MahasiswaResource($mahasiswa)
+        ]);
     }
 
-    /**
-     * Edit the specified resource for web (return JSON).
-     */
-    public function edit($id)
+    // Update data mahasiswa berdasarkan NIM
+    public function update(Request $request, string $nim)
     {
-        $data = Mahasiswa::findOrFail($id);
-        return response()->json($data);
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        $request->validate([
-            'nim' => 'required|string|max:10|unique:mahasiswas,nim,' . $id . ',nim',
+$request->validate([
+            'nim' => 'required|string|max:10|unique:mahasiswas,nim,' . $nim . ',nim',
             'nama' => 'required|string|max:255',
-            'jk' => 'required|string|max:10',
+            'jk' => 'required|string|in:Laki-Laki,Perempuan',
             'tgl_lahir' => 'required|date',
             'jurusan' => 'required|string|max:100',
             'alamat' => 'required|string|max:255'
         ]);
-        $mahasiswa = Mahasiswa::findorfail($id);
+
+        $mahasiswa = Mahasiswa::findOrFail($nim);
         $mahasiswa->update($request->all());
-        return (new MahasiswaResource($mahasiswa))
-            ->additional([
-                'success' => true,
-                'message' => 'Mahasiswa updated successfully'
-            ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => new MahasiswaResource($mahasiswa),
+            'message' => 'Mahasiswa updated successfully'
+        ]);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
+    // Hapus data mahasiswa berdasarkan NIM
+    public function destroy(string $nim)
     {
-        $mahasiswa = Mahasiswa::findorfail($id);
+        $mahasiswa = Mahasiswa::findOrFail($nim);
         $mahasiswa->delete();
-        return (new MahasiswaResource($mahasiswa))
-            ->additional([
-                'success' => true,
-                'message' => 'Mahasiswa deleted successfully'
-            ]);
+
+        return response()->json([
+            'success' => true,
+            'data' => new MahasiswaResource($mahasiswa),
+            'message' => 'Mahasiswa deleted successfully'
+        ]);
     }
 }

@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Laravel with Ajax</title>
     <meta name="csrf-token" content="{{ csrf_token() }}" />
-    <link rel="stylesheet" href="{{ asset('assets/bootstrap.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/toastr.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/datatables.min.css') }}" />
-    <link rel="stylesheet" href="{{ asset('assets/DataTables-1.13.3/css/dataTables.bootstrap5.min.css') }}" />
+    <link rel="stylesheet" href="{{ secure_asset('assets/bootstrap.min.css') }}" />
+    <link rel="stylesheet" href="{{ secure_asset('assets/toastr.min.css') }}" />
+    <link rel="stylesheet" href="{{ secure_asset('assets/datatables.min.css') }}" />
+    <link rel="stylesheet" href="{{ secure_asset('assets/DataTables-1.13.3/css/dataTables.bootstrap5.min.css') }}" />
 </head>
 <body>
     <div class="d-flex" style="min-height: 100vh">
         {{-- Sidebar --}}
         <div class="bg-dark text-white d-flex flex-column align-items-start p-3 vh-100" style="width: 200px; position: sticky; top: 0;">
     <div class="mb-4 w-100 text-center">
-        <img src="{{ asset('assets/image/logo.png') }}" alt="logo" class="img-fluid" style="max-width: 160px; height: auto;" />
+        <img src="{{ secure_asset('assets/image/logo.png') }}" alt="logo" class="img-fluid" style="max-width: 160px; height: auto;" />
     </div>
 
     <ul class="nav flex-column w-100">
@@ -84,12 +84,12 @@
     </div>
 
     {{-- Scripts --}}
-    <script src="{{ asset('assets/jquery-3.6.1.js') }}"></script>
-    <script src="{{ asset('assets/bootstrap.min.js') }}"></script>
-    <script src="{{ asset('assets/datatables.min.js') }}"></script>
-    <script src="{{ asset('assets/toastr.min.js') }}"></script>
-    <script src="{{ asset('assets/DataTables-1.13.3/js/dataTables.bootstrap5.min.js') }}"></script>
-    <script src="{{ asset('assets/DataTables-1.13.3/js/jquery.dataTables.min.js') }}"></script>
+    <script src="{{ secure_asset('assets/jquery-3.6.1.js') }}"></script>
+    <script src="{{ secure_asset('assets/bootstrap.min.js') }}"></script>
+    <script src="{{ secure_asset('assets/datatables.min.js') }}"></script>
+    <script src="{{ secure_asset('assets/toastr.min.js') }}"></script>
+    <script src="{{ secure_asset('assets/DataTables-1.13.3/js/dataTables.bootstrap5.min.js') }}"></script>
+    <script src="{{ secure_asset('assets/DataTables-1.13.3/js/jquery.dataTables.min.js') }}"></script>
     @yield('scripts')
 </body>
 </html>
