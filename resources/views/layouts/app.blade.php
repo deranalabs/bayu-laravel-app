@@ -86,7 +86,7 @@
 
     {{-- Scripts --}}
     <script src="{{ asset('assets/jquery-3.6.1.js') }}"></script>
-    <script src="{{ asset('assets/bootstrap.bundle.min.js') }}"></script> {{-- GANTI DARI bootstrap.min.js --}}
+    <script src="{{ asset('assets/bootstrap.min.js') }}"></script> {{-- GANTI DARI bootstrap.bundle.min.js --}}
     <script src="{{ asset('assets/datatables.min.js') }}"></script>
     <script src="{{ asset('assets/toastr.min.js') }}"></script>
     <script src="{{ asset('assets/DataTables-1.13.3/js/dataTables.bootstrap5.min.js') }}"></script>

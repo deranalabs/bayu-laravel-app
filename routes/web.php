@@ -17,7 +17,9 @@ Route::middleware(['auth'])->group(function () {
         return view('dashboard');
     });
 
-    Route::get('/mahasiswa', [MahasiswaController::class, 'index'])->name('mahasiswa');
+Route::get('/mahasiswa', function () {
+    return view('mahasiswa');
+})->name('mahasiswa');
 
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');   
 });

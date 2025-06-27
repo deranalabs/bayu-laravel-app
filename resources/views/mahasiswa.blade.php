@@ -51,9 +51,9 @@
                         </div>
                         <div class="mb-3">
                             <label for="jk" class="form-label">Jenis Kelamin</label>
-                            <select class="form-control" id="jk" name="jk" required>
+<select class="form-control" id="jk" name="jk" required>
                                 <option value="">Pilih Jenis Kelamin</option>
-                                <option value="Laki-laki">Laki-laki</option>
+                                <option value="Laki-Laki">Laki-Laki</option>
                                 <option value="Perempuan">Perempuan</option>
                             </select>
                         </div>
@@ -117,7 +117,13 @@
                 table = $('#table-mahasiswa').DataTable({
                     // processing: true,
                     // serverSide: true,
-                    ajax: "api/mahasiswa",
+                    ajax: {
+                        url: "api/mahasiswa",
+                        dataSrc: function(json) {
+                            console.log('DataTable AJAX response:', json);
+                            return json.data;
+                        }
+                    },
                     order: [[0, 'desc']],
                     dom: 'Bfrtip',
                     buttons: [
@@ -132,8 +138,8 @@
                         {data: 'alamat', name: 'alamat'},
                         {data:'nim', render: function(data) {
                             return '<div class="d-flex justify-content-center m-2">'+
-                                        '<button type="button" class="btn btn-warning btn-sm m-2" id="editMahasiswa" data-bs-toggle="modal" data-target="#modal-mahasiswa" data-nim="'+data+'">Edit</button>'+
-                                        '<button type="button" class="btn btn-danger btn-sm m-2" id="hapusModal" data-bs-toggle="modal" data-target="#hapusMahasiswa" data-nim="'+data+'">Hapus</button>'+
+                                        '<button type="button" class="btn btn-warning btn-sm m-2" id="editMahasiswa" data-bs-toggle="modal" data-bs-target="#modal-mahasiswa" data-nim="'+data+'">Edit</button>'+
+                                        '<button type="button" class="btn btn-danger btn-sm m-2" id="hapusModal" data-bs-toggle="modal" data-bs-target="#hapusMahasiswa" data-nim="'+data+'">Hapus</button>'+
                                     '</div>';
                         }},
                     ]
@@ -160,8 +166,8 @@
                         tgl_lahir: $('#tgl_lahir').val(),
                         jurusan: $('#jurusan').val(),
                         alamat: $('#alamat').val()
-                    }
-                }
+                    };
+                };
 
                 $(document).on('click', '#btn-simpan', function(e) {
                     e.preventDefault();
@@ -169,7 +175,7 @@
                     $.ajax({
                         url: "api/mahasiswa",
                         type: "POST",
-                         data: {
+                        data: {
                             nama: data.nama,
                             nim: data.nim,
                             jk: data.jk,
@@ -192,30 +198,30 @@
                     });
                 });
 
-$(document).on('click', '#editMahasiswa', function(event) {
-    var nim = $(this).data('nim');
-    $('#btn-simpan').text('Update');
-    $('#btn-simpan').attr('id', 'btn-update');
-    $.ajax({
-        url: "api/mahasiswa/" + nim,
-        type: "GET",
-        success: function(response) {
-            console.log(response);
-            $('#nama').val(response.data.nama);
-            $('#nim').val(response.data.nim).prop('disabled', true);
-            $('#jk').val(response.data.jk);
-            $('#tgl_lahir').val(response.data.tgl_lahir);
-            $('#jurusan').val(response.data.jurusan);
-            $('#alamat').val(response.data.alamat);
-            $('#modal-mahasiswa').modal('show');
-        },
-        error: function(xhr, status, error) {
-            console.log(xhr.responseText);
-            alert('Data gagal diambil');
-            toastr.error('Data gagal diambil');
-        }
-    });
-});
+                $(document).on('click', '#editMahasiswa', function(event) {
+                    var nim = $(this).data('nim');
+                    $('#btn-simpan').text('Update');
+                    $('#btn-simpan').attr('id', 'btn-update');
+                    $.ajax({
+                        url: "api/mahasiswa/" + nim,
+                        type: "GET",
+                        success: function(response) {
+                            console.log(response);
+                            $('#nama').val(response.data.nama);
+                            $('#nim').val(response.data.nim).prop('disabled', true);
+                            $('#jk').val(response.data.jk);
+                            $('#tgl_lahir').val(response.data.tgl_lahir);
+                            $('#jurusan').val(response.data.jurusan);
+                            $('#alamat').val(response.data.alamat);
+                            $('#modal-mahasiswa').modal('show');
+                        },
+                        error: function(xhr, status, error) {
+                            console.log(xhr.responseText);
+                            alert('Data gagal diambil');
+                            toastr.error('Data gagal diambil');
+                        }
+                    });
+                });
 
                 $(document).on('click', '#btn-update', function(e) {
                     e.preventDefault();
@@ -237,12 +243,12 @@ $(document).on('click', '#editMahasiswa', function(event) {
                         }
                     });
                 });
+
                 $(document).on('click', '#hapusModal', function(event) {
                     $('#hapusMahasiswa').modal('show');
-                    var button = $(event.relatedTarget);
                     var nim = $(this).data('nim');
                     $('#hapus').data('nim', nim);
-                    $.ajax({    
+                    $.ajax({
                         url: "api/mahasiswa/" + nim,
                         type: "GET",
                         success: function(response) {

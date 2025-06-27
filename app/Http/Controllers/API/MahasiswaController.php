@@ -28,9 +28,9 @@ class MahasiswaController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nim' => 'required|string|max:20|unique:mahasiswas',
+            'nim' => 'required|string|max:20|unique:mahasiswas,nim',
             'nama' => 'required|string|max:255',
-            'jk' => 'required|string|max:10',
+            'jk' => 'required|string|in:Laki-Laki,Perempuan',
             'tgl_lahir' => 'required|date',
             'jurusan' => 'required|string|max:100',
             'alamat' => 'required|string|max:255'
@@ -59,8 +59,8 @@ class MahasiswaController extends Controller
     // Update data mahasiswa berdasarkan NIM
     public function update(Request $request, string $nim)
     {
-$request->validate([
-            'nim' => 'required|string|max:10|unique:mahasiswas,nim,' . $nim . ',nim',
+        $request->validate([
+            'nim' => 'required|string|max:20|unique:mahasiswas,nim,' . $nim . ',nim',
             'nama' => 'required|string|max:255',
             'jk' => 'required|string|in:Laki-Laki,Perempuan',
             'tgl_lahir' => 'required|date',
